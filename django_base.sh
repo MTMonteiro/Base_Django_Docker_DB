@@ -11,7 +11,9 @@ a=2
 mkdir $dir_work/$project_name
 
 # Criação do ambiente virtual
-virtualenv venv
+# Criação do ambiente virtual
+#ambiente criado no script install_py
+#virtualenv venv
 source venv/bin/activate
 
 pip3 install django
