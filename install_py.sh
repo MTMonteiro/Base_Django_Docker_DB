@@ -31,12 +31,12 @@ check_distro(){
 
   case $distro in
   centos)
-    yum install gcc openssl-devel bzip2-devel libffi-devel wget >&-
+    yum install gcc openssl-devel bzip2-devel libffi-devel wget # >&-
 
     ;;
 
   ubuntu|debian)
-    apt install gcc build-essential libssl-dev libffi-dev >&-
+    apt install gcc build-essential libssl-dev libffi-dev # >&-
     [ "$?" -eq "100" ] && echo "Execute o script como ROOT !!!" && exit;
     ;;
 
@@ -66,9 +66,9 @@ check_python(){
 
 virtualenv_create(){
     echo "Criando ambiente virtual"
-    apt install python3-pip >&-
-    pip3 install virtualenv >&-
-    virtualenv -p /usr/bin/python$check_py_version venv
+    apt install python3-pip # >&-
+    pip3 install virtualenv # >&-
+    virtualenv -p python$check_py_version venv
 }
 
 remove_python(){
@@ -91,8 +91,10 @@ install_python(){
     tar xzf Python-$py_version.tgz
     cd Python-$py_version
     echo "Configurando..."
-    ./configure --enable-optimizations
-    make altinstall
+    ./configure --enable-optimizations --enable-loadable-sqlite-extensions
+    #make altinstall
+    make
+    make install
     rm /usr/src/Python-$py_version.tgz
     python$check_py_version -V
     [ "$?" -eq "0" ] && echo "Python instalado com sucesso" || echo "Falha na instalação"
