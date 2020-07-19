@@ -91,10 +91,17 @@ install_python(){
     tar xzf Python-$py_version.tgz
     cd Python-$py_version
     echo "Configurando..."
-    ./configure --enable-optimizations --enable-loadable-sqlite-extensions
-    #make altinstall
-    make
-    make install
+
+    if [ "$distro" == "centos"];then
+        sudo LD_RUN_PATH=/usr/local/lib ./configure --enable-optimizations --enable-loadable-sqlite-extensions
+        sudo LD_RUN_PATH=/usr/local/lib make altinstall
+    else
+        ./configure --enable-optimizations --enable-loadable-sqlite-extensions
+        make altinstall
+    fi
+
+    #make
+    #make install
     rm /usr/src/Python-$py_version.tgz
     python$check_py_version -V
     [ "$?" -eq "0" ] && echo "Python instalado com sucesso" || echo "Falha na instalação"
