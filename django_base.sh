@@ -16,7 +16,7 @@ mkdir $dir_work/$project_name
 #virtualenv venv
 source venv/bin/activate
 
-pip3 install django
+pip3 install Django==2.2
 
 cd $dir_work/$project_name
 django-admin startproject $project_name .
